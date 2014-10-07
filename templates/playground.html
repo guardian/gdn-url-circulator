@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+
+<html>
+	<head>
+		<title>{% block title %}{% endblock %}</title>
+		<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+		<link href="/static/css/base.css" rel="stylesheet"/>
+		<link rel="shortcut icon" href="http://static.guim.co.uk/favicon.ico" type="image/x-icon" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	</head>
+
+	<body class="full-screen-circulator">
+	<div class="circulator-panel">
+		<iframe id="circulator-frame" class="circulator-frame" src="http://www.telegraph.co.uk" allowfullscreen="true" seamless></iframe>
+	</div>
+	</body>
+	<script src="/static/js/mousetrap.min.js"></script>
+	<script src="/static/js/coffee-script.js"></script>
+	<script type="text/coffeescript">
+
+	jQuery ->
+		urls = ['http://www.dailymail.co.uk', 'http://news.bbc.co.uk']
+		i = 0
+		wait_seconds = 28
+		circulatorFrame = document.getElementById 'circulator-frame'
+
+		advance = ->
+			console.log "Advancing"
+			circulatorFrame.src = urls[i]
+			i++
+			i = if i >= urls.length then 0 else i
+
+		jQuery(window).on('circ.advance', advance)
+
+		emitAdvance = -> jQuery(window).trigger('circ.advance')
+
+		setInterval(emitAdvance , (wait_seconds * 1000))
+
+		Mousetrap.bind('space', emitAdvance)
+
+	</script>
+
+</html>
