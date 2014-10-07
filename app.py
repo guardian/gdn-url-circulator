@@ -24,14 +24,14 @@ class CirculatorDisplay(webapp2.RequestHandler):
 
 		self.response.out.write(template.render(template_values))
 
-class PlaygroundDisplay(webapp2.RequestHandler):
-	def get(self):
-		template = jinja_environment.get_template('playground.html')
+class PercolaterDisplay(webapp2.RequestHandler):
+	def get(self, name):
+		template = jinja_environment.get_template('percolater.html')
 		template_values = {}
 
 		self.response.out.write(template.render(template_values))
 
 app = webapp2.WSGIApplication([('/', MainPage),
 	webapp2.Route(r'/circulator/<slug>', handler=CirculatorDisplay),
-	webapp2.Route(r'/playground', handler=PlaygroundDisplay),],
+	webapp2.Route(r'/percolater/<name>', handler=PercolaterDisplay),],
                               debug=True)
