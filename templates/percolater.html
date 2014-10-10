@@ -25,17 +25,26 @@
 		circulatorFrame = document.getElementById 'circulator-frame'
 		timeout = null
 
+		scheduleAdvance = ->
+			timeout = window.setTimeout(emitAdvance , (wait_seconds * 1000))
+
+		cancelCurrentTimeout = (currentTimeoutId) ->
+			if(currentTimeoutId)
+				window.cancelTimeout(currentTimeoutId)
+
 		advance = ->
-			console.log 'Forward'
+			//console.log 'Forward'
 			i++
 			i = if i >= urls.length then 0 else i
 			circulatorFrame.src = urls[i]
+			scheduleAdvance()
 
 		reverse = ->
-			console.log 'Backward'
+			//console.log 'Backward'
 			i--
 			i = if i < 0 then i = urls.length else i
 			circulatorFrame.src = urls[i]
+			scheduleAdvance()
 
 		jQuery(window).on('circ.advance', advance)
 		jQuery(window).on('circ.reverse', reverse)
@@ -43,10 +52,11 @@
 		emitAdvance = -> jQuery(window).trigger('circ.advance')
 		emitReverse = -> jQuery(window).trigger('circ.reverse')
 
-		setInterval(emitAdvance , (wait_seconds * 1000))
+		Mousetrap.bind(['right', 'd'], emitAdvance)
+		Mousetrap.bind(['left', 'a'], emitReverse)
 
-		Mousetrap.bind(['right'], emitAdvance)
-		Mousetrap.bind(['left'], emitReverse)
+		emitAdvance() // Set the frame to be the first in the list
+		scheduleAdvance()
 
 	</script>
 

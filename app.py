@@ -39,6 +39,28 @@ class PercolaterDisplay(webapp2.RequestHandler):
 				"http://www.mirror.co.uk",
 				"http://www.aljazeera.com/",
 				"http://www.cnn.com/",],
+			'au-nf' : [
+				"http://www.sbs.com.au/news/",
+				"http://www.news.com.au",
+				"http://www.abc.net.au/news/nsw/",
+				"http://www.theage.com.au",
+
+				"http://www.afr.com",
+				"http://www.smh.com.au",
+				"http://www.theaustralian.com.au",
+				"http://www.couriermail.com.au",
+
+				"http://www.dailytelegraph.com.au/",
+				"http://www.heraldsun.com.au/",
+				"http://www.ntnews.com.au/",
+				"http://www.perthnow.com.au/",
+
+				"http://www.sbs.com.au/news/latest-news",
+				"http://www.theage.com.au/news-wire",
+				"http://www.theaustralian.com.au/news/latest-news",
+				"http://www.news.com.au/breaking-news",
+
+			],
 		}
 
 		template_values = {
