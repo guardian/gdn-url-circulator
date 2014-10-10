@@ -19,24 +19,34 @@
 	<script type="text/coffeescript">
 
 	jQuery ->
-		urls = ['http://www.dailymail.co.uk', 'http://news.bbc.co.uk']
+		urls = {{sites}}
 		i = 0
 		wait_seconds = 28
 		circulatorFrame = document.getElementById 'circulator-frame'
+		timeout = null
 
 		advance = ->
-			console.log "Advancing"
-			circulatorFrame.src = urls[i]
+			console.log 'Forward'
 			i++
 			i = if i >= urls.length then 0 else i
+			circulatorFrame.src = urls[i]
+
+		reverse = ->
+			console.log 'Backward'
+			i--
+			i = if i < 0 then i = urls.length else i
+			circulatorFrame.src = urls[i]
 
 		jQuery(window).on('circ.advance', advance)
+		jQuery(window).on('circ.reverse', reverse)
 
 		emitAdvance = -> jQuery(window).trigger('circ.advance')
+		emitReverse = -> jQuery(window).trigger('circ.reverse')
 
 		setInterval(emitAdvance , (wait_seconds * 1000))
 
-		Mousetrap.bind('space', emitAdvance)
+		Mousetrap.bind(['right'], emitAdvance)
+		Mousetrap.bind(['left'], emitReverse)
 
 	</script>
 

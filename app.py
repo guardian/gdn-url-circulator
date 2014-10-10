@@ -27,7 +27,23 @@ class CirculatorDisplay(webapp2.RequestHandler):
 class PercolaterDisplay(webapp2.RequestHandler):
 	def get(self, name):
 		template = jinja_environment.get_template('percolater.html')
-		template_values = {}
+
+		sites = {
+			'default' : ['http://www.bbc.co.uk/news/',
+				"http://www.thetimes.co.uk/",
+				"http://www.telegraph.co.uk",
+				"http://www.ft.com",
+				"http://m.sky.com/skynews/news",
+				"http://www.dailymail.co.uk/",
+				"http://m.independent.co.uk",
+				"http://www.mirror.co.uk",
+				"http://www.aljazeera.com/",
+				"http://www.cnn.com/",],
+		}
+
+		template_values = {
+			"sites" : sites.get(name, json.dumps(sites['default']))
+		}
 
 		self.response.out.write(template.render(template_values))
 
