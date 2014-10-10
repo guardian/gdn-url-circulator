@@ -29,7 +29,9 @@ class PercolaterDisplay(webapp2.RequestHandler):
 		template = jinja_environment.get_template('percolater.html')
 
 		sites = {
-			'default' : ['http://www.bbc.co.uk/news/',
+			'default' : [
+				'http://gu-front-checker.appspot.com/',
+				'http://www.bbc.co.uk/news/',
 				"http://www.thetimes.co.uk/",
 				"http://www.telegraph.co.uk",
 				"http://www.ft.com",
@@ -40,6 +42,7 @@ class PercolaterDisplay(webapp2.RequestHandler):
 				"http://www.aljazeera.com/",
 				"http://www.cnn.com/",],
 			'au-nf' : [
+				'http://gu-front-checker.appspot.com/au',
 				"http://www.sbs.com.au/news/",
 				"http://www.news.com.au",
 				"http://www.abc.net.au/news/nsw/",

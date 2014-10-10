@@ -20,7 +20,7 @@
 
 	jQuery ->
 		urls = {{sites}}
-		i = 0
+		i = -1 # The index will get advanced automatically
 		wait_seconds = 28
 		circulatorFrame = document.getElementById 'circulator-frame'
 		timeoutId = null
@@ -57,7 +57,7 @@
 		Mousetrap.bind(['right', 'd'], emitAdvance)
 		Mousetrap.bind(['left', 'a'], emitReverse)
 
-		emitAdvance() // Set the frame to be the first in the list
+		emitAdvance() # Set the frame to be the first in the list
 
 	</script>
 
