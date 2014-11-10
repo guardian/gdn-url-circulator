@@ -6,6 +6,8 @@ import logging
 from urllib import quote, urlencode
 from google.appengine.api import urlfetch
 
+import pysistence as immutable
+
 jinja_environment = jinja2.Environment(
     loader=jinja2.FileSystemLoader(os.path.join(os.path.dirname(__file__), "templates")))
 
@@ -24,12 +26,11 @@ class CirculatorDisplay(webapp2.RequestHandler):
 
 		self.response.out.write(template.render(template_values))
 
-class PercolaterDisplay(webapp2.RequestHandler):
+class PercolatorDisplay(webapp2.RequestHandler):
 	def get(self, name):
 		template = jinja_environment.get_template('percolater.html')
 
-		sites = {
-			'default' : [
+		default_list = immutable.make_list(
 				'http://gu-front-checker.appspot.com/',
 				'http://www.bbc.co.uk/news/',
 				"http://www.thetimes.co.uk/",
@@ -40,7 +41,17 @@ class PercolaterDisplay(webapp2.RequestHandler):
 				"http://m.independent.co.uk",
 				"http://www.mirror.co.uk",
 				"http://www.aljazeera.com/",
-				"http://www.cnn.com/",],
+				"http://www.cnn.com/",
+			)
+
+		paul_owen = immutable.make_list(
+			'http://www.theguardian.com/au',
+			'http://www.theguardian.com/us',
+			)
+
+		sites = {
+			'default' : list(default_list),
+			'paul-owen' : list(default_list.concat(paul_owen)),
 			'au-nf' : [
 				'http://gu-front-checker.appspot.com/au',
 				"http://www.sbs.com.au/news/",
@@ -72,7 +83,10 @@ class PercolaterDisplay(webapp2.RequestHandler):
 
 		self.response.out.write(template.render(template_values))
 
-app = webapp2.WSGIApplication([('/', MainPage),
+app = webapp2.WSGIApplication([
+	('/', MainPage),
 	webapp2.Route(r'/circulator/<slug>', handler=CirculatorDisplay),
-	webapp2.Route(r'/percolater/<name>', handler=PercolaterDisplay),],
+	webapp2.Route(r'/percolator/<name>', handler=PercolatorDisplay),
+	webapp2.Route(r'/percolater/<name>', handler=PercolatorDisplay),
+	],
                               debug=True)
