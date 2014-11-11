@@ -47,6 +47,9 @@ class PercolatorDisplay(webapp2.RequestHandler):
 		paul_owen = immutable.make_list(
 			'http://www.theguardian.com/au',
 			'http://www.theguardian.com/us',
+			'http://www.buzzfeed.com/',
+			'https://news.vice.com/',
+			'http://www.nytimes.com/',
 			)
 
 		sites = {
